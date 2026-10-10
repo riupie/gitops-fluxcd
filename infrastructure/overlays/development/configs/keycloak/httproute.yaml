@@ -6,7 +6,7 @@ metadata:
   namespace: keycloak
 spec:
   parentRefs:
-    - name: lab-gateway
+    - name: gateway-ai
       namespace: gateway-system
       sectionName: https-lab-riupie-com
   hostnames:
