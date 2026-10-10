@@ -16,6 +16,12 @@ spec:
         - path:
             type: PathPrefix
             value: /mcp/web-fetcher
+        - path:
+            type: PathPrefix
+            value: /.well-known/oauth-protected-resource/mcp/web-fetcher
+        - path:
+            type: PathPrefix
+            value: /.well-known/oauth-authorization-server/mcp/web-fetcher
       backendRefs:
         - group: agentgateway.dev
           kind: AgentgatewayBackend

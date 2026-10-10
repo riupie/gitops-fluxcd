@@ -1,5 +1,6 @@
 ---
-# Require a valid Keycloak (master realm) access token for the MCP route.
+# Require a valid Keycloak (mcp realm) access token for the MCP route.
+# Keycloak side: scope `mcp-web-fetcher` (audience mapper) + scope `mcp` (groups mapper).
 apiVersion: agentgateway.dev/v1alpha1
 kind: AgentgatewayPolicy
 metadata:
@@ -14,22 +15,22 @@ spec:
     jwtAuthentication:
       mode: Strict
       providers:
-        - issuer: https://keycloak.lab.riupie.com/realms/master
+        - issuer: https://keycloak.lab.riupie.com/realms/mcp
           audiences:
-            - mcp-audience
+            - https://gateway.lab.riupie.com/mcp/web-fetcher
           jwks:
             remote:
-              url: https://keycloak.lab.riupie.com/realms/master/protocol/openid-connect/certs
+              url: https://keycloak.lab.riupie.com/realms/mcp/protocol/openid-connect/certs
       mcp:
         provider: Keycloak
         resourceMetadata:
           resource: https://gateway.lab.riupie.com/mcp/web-fetcher
           scopesSupported:
-            - email
+            - openid
+            - mcp
+            - mcp-web-fetcher
           bearerMethodsSupported:
             - header
-            - body
-            - query
   backend:
     mcp:
       authorization:
