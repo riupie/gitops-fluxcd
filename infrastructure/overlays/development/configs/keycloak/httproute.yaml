@@ -11,6 +11,7 @@ spec:
       sectionName: https-lab-riupie-com
   hostnames:
     - keycloak.lab.riupie.com
+    - keycloak-admin.lab.riupie.com
   rules:
     - matches:
         - path:
