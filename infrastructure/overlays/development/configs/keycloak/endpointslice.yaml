@@ -1,0 +1,18 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: keycloak
+  namespace: keycloak
+  labels:
+    kubernetes.io/service-name: keycloak
+addressType: IPv4
+ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 192.168.10.9
+    conditions:
+      ready: true
