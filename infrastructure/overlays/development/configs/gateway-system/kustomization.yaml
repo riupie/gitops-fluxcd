@@ -3,7 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - certificate-wildcard-riupie-com.yaml
   - certificate-wildcard-lab-riupie-com.yaml
   - gateway-ai.yaml
   - httproute-https-redirect.yaml

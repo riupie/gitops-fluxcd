@@ -13,18 +13,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    - name: https-riupie-com
-      hostname: "*.riupie.com"
-      protocol: HTTPS
-      port: 443
-      allowedRoutes:
-        namespaces:
-          from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: wildcard-riupie-com-tls
-    - name: https-lab-riupie-com
+    - name: https
       hostname: "*.lab.riupie.com"
       protocol: HTTPS
       port: 443

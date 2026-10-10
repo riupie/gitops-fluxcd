@@ -8,7 +8,7 @@ spec:
   parentRefs:
     - name: gateway-ai
       namespace: gateway-system
-      sectionName: https-lab-riupie-com
+      sectionName: https
   hostnames:
     - keycloak.lab.riupie.com
     - keycloak-admin.lab.riupie.com
