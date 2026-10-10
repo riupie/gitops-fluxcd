@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ../../../base/external-dns
 patches:
-  - path: external-dns-values.yaml
+  - path: values.yaml
     target:
       kind: HelmRelease
       name: external-dns

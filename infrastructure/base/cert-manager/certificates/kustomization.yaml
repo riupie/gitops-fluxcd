@@ -1,8 +1,0 @@
----
-# Not referenced by ../kustomization.yaml: the target namespace
-# (envoy-gateway-system) is not managed in this repo at the moment.
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - wildcard-riupie-com.yaml
-  - wildcard-lab-riupie-com.yaml
