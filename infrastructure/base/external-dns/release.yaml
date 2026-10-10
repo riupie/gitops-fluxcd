@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  interval: 1h
+  releaseName: external-dns
+  chart:
+    spec:
+      chart: external-dns
+      version: "1.16.1"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    provider:
+      name: rfc2136
+    sources:
+      - service
+      - ingress
+      - gateway-httproute
+      - gateway-tlsroute
+      - gateway-tcproute
+      - gateway-udproute
+      - crd
+    policy: sync
+    registry: txt
+    txtOwnerId: k8s
+    txtPrefix: external-dns-
+    serviceMonitor:
+      enabled: false
