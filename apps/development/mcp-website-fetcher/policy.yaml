@@ -25,6 +25,8 @@ spec:
         provider: Keycloak
         resourceMetadata:
           resource: https://gateway.lab.riupie.com/mcp/web-fetcher
+          authorizationServers:
+            - https://keycloak.lab.riupie.com/realms/mcp
           scopesSupported:
             - openid
             - mcp
