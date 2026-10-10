@@ -15,7 +15,6 @@ spec:
             - "riupie.com"
         dns01:
           cloudflare:
-            email: rahmataw96@gmail.com
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cloudflare-api-key
               key: api-key
