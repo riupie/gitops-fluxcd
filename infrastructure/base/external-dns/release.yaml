@@ -29,9 +29,6 @@ spec:
       - service
       - ingress
       - gateway-httproute
-      - gateway-tlsroute
-      - gateway-tcproute
-      - gateway-udproute
       - crd
     policy: sync
     registry: txt
