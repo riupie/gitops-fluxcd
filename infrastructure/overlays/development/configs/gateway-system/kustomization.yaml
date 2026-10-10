@@ -6,3 +6,4 @@ resources:
   - certificate-wildcard-riupie-com.yaml
   - certificate-wildcard-lab-riupie-com.yaml
   - gateway-ai.yaml
+  - httproute-https-redirect.yaml

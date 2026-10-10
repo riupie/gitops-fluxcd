@@ -1,0 +1,39 @@
+---
+# Require a valid Keycloak (master realm) access token for the MCP route.
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: mcp-website-fetcher-jwt
+  namespace: mcp-server
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: mcp-website-fetcher
+  traffic:
+    jwtAuthentication:
+      mode: Strict
+      providers:
+        - issuer: https://keycloak.lab.riupie.com/realms/master
+          audiences:
+            - mcp-audience
+          jwks:
+            remote:
+              url: https://keycloak.lab.riupie.com/realms/master/protocol/openid-connect/certs
+      mcp:
+        provider: Keycloak
+        resourceMetadata:
+          resource: https://gateway.lab.riupie.com/mcp/web-fetcher
+          scopesSupported:
+            - email
+          bearerMethodsSupported:
+            - header
+            - body
+            - query
+  backend:
+    mcp:
+      authorization:
+        action: Allow
+        policy:
+          matchExpressions:
+            - 'has(jwt.groups) && jwt.groups.exists(group, group == "users")'
