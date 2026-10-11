@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-everything
+  namespace: mcp-server
+spec:
+  selector:
+    matchLabels:
+      app: mcp-everything
+  template:
+    metadata:
+      labels:
+        app: mcp-everything
+    spec:
+      containers:
+        - name: mcp-everything
+          image: node:22-alpine
+          command:
+            - npx
+            - -y
+            - "@modelcontextprotocol/server-everything@2026.8.31"
+            - streamableHttp
+          env:
+            - name: PORT
+              value: "3001"
+            - name: npm_config_cache
+              value: /tmp/.npm
+          ports:
+            - containerPort: 3001

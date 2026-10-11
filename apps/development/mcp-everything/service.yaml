@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mcp-website-fetcher
+  name: mcp-everything
   namespace: mcp-server
   labels:
-    app: mcp-website-fetcher
+    app: mcp-everything
 spec:
   selector:
-    app: mcp-website-fetcher
+    app: mcp-everything
   ports:
     - port: 80
-      targetPort: 8000
+      targetPort: 3001
       appProtocol: agentgateway.dev/mcp

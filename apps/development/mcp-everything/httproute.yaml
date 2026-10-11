@@ -2,7 +2,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: mcp-website-fetcher
+  name: mcp-everything
   namespace: mcp-server
 spec:
   parentRefs:
@@ -15,13 +15,13 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /mcp/web-fetcher
+            value: /mcp/everything
         - path:
             type: PathPrefix
-            value: /.well-known/oauth-protected-resource/mcp/web-fetcher
+            value: /.well-known/oauth-protected-resource/mcp/everything
         - path:
             type: PathPrefix
-            value: /.well-known/oauth-authorization-server/mcp/web-fetcher
+            value: /.well-known/oauth-authorization-server/mcp/everything
       backendRefs:
         - group: agentgateway.dev
           kind: AgentgatewayBackend

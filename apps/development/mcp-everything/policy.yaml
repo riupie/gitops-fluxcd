@@ -1,0 +1,53 @@
+---
+# AuthN: valid Keycloak (mcp realm) JWT.
+# AuthZ:
+#   - traffic.authorization: caller must be in group `mcp-users` (HTTP 403 otherwise)
+#   - backend.mcp.authorization: per-tool access by group
+#       backend -> echo, get-annotated-message
+#       frontend -> get-sum, trigger-long-running-operation
+# Keycloak side: scope `mcp-everything` (audience mapper) + scope `mcp` (groups mapper, full.path=false).
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: mcp-everything-jwt
+  namespace: mcp-server
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: mcp-everything
+  traffic:
+    jwtAuthentication:
+      mode: Strict
+      providers:
+        - issuer: https://keycloak.lab.riupie.com/realms/mcp
+          audiences:
+            - https://gateway.lab.riupie.com/mcp/everything
+          jwks:
+            remote:
+              url: https://keycloak.lab.riupie.com/realms/mcp/protocol/openid-connect/certs
+      mcp:
+        provider: Keycloak
+        resourceMetadata:
+          resource: https://gateway.lab.riupie.com/mcp/everything
+          authorizationServers:
+            - https://keycloak.lab.riupie.com/realms/mcp
+          scopesSupported:
+            - openid
+            - mcp
+            - mcp-everything
+          bearerMethodsSupported:
+            - header
+    authorization:
+      action: Require
+      policy:
+        matchExpressions:
+          - 'has(jwt.groups) && jwt.groups.exists(g, g == "mcp-users")'
+  backend:
+    mcp:
+      authorization:
+        action: Allow
+        policy:
+          matchExpressions:
+            - 'jwt.groups.exists(g, g == "backend") && mcp.tool.name in ["echo", "get-annotated-message"]'
+            - 'jwt.groups.exists(g, g == "frontend") && mcp.tool.name in ["get-sum", "trigger-long-running-operation"]'
